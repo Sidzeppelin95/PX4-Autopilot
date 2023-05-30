@@ -99,10 +99,25 @@
 #
 #=============================================================================
 
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.9)
 
 set(PX4_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE FILEPATH "PX4 source directory" FORCE)
 set(PX4_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE FILEPATH "PX4 binary directory" FORCE)
+
+function(set_policy_Cmp0126)
+  cmake_policy(PUSH)
+  cmake_policy(SET CMP0126 NEW)
+  # ... add your custom CMake code here ...
+  cmake_policy(POP)
+endfunction()
+
+# Use the function to temporarily set policy CMP0126 to NEW
+set_policy_Cmp0126()
+
+# Rest of your project
+project(my_project)
+
+
 
 list(APPEND CMAKE_MODULE_PATH ${PX4_SOURCE_DIR}/cmake)
 include(px4_parse_function_args)
@@ -487,3 +502,4 @@ add_custom_target(install_python_requirements
 if(EXISTS "${PX4_SOURCE_DIR}/platforms/${PX4_PLATFORM}/cmake/finalize.cmake")
 	include(finalize)
 endif()
+
